@@ -1,0 +1,7 @@
+{
+  "name": "RadioBoise",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
