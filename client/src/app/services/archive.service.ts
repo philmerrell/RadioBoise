@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 
 export interface ArchivedShowListItem {
@@ -65,14 +66,18 @@ export class ArchiveService {
   constructor(private http: HttpClient) { }
 
   async getArchiveShowsList() {
-    return this.http.get('/assets/shows-list-archives.json')
+    return this.http.get(`${environment.apiUrl}/creek/archives/shows-list`)
       .pipe(
         map((response: { data: ArchivedShowListItem[]}, meta: any) => response.data)
       ).toPromise();
   }
 
-  async getArchives(): Promise<ShowArchiveItem[]> {
-    return this.http.get<ArchivesResponse>('/assets/archives.json')
+  async getArchives(showName?: string): Promise<ShowArchiveItem[]> {
+    let url = `${environment.apiUrl}/creek/archives`;
+    if (showName) {
+      url = `${url}?showName=${showName}`
+    }
+    return this.http.get<ArchivesResponse>(url)
       .pipe(
         map((response: ArchivesResponse) => response.data)
       ).toPromise();

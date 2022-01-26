@@ -76,7 +76,9 @@ export class AudiobarComponent implements OnInit {
 
   getTimeRemaining() {}
 
-  toggleAudio() {
+  toggleAudio(event: PointerEvent) {
+    console.log(event);
+    event.stopPropagation();
     this.audioService.toggleAudio();
   }
 
