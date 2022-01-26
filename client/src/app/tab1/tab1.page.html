@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Radio Boise
+      <!-- <ion-img style="height: 40px;" src="/assets/RadioBoise-Logo.png"></ion-img> -->
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Schedule</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
+  <div class="ion-padding">
+    
+    
+  </div>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <!-- <ion-fab slot="fixed"> -->
+          <ion-fab-button *ngIf="currentTrack$ | async as currentTrack" size="small" (click)="playStream()" color="primary">
+            <ion-icon *ngIf="currentTrack.type === 'livestream'" slot="icon-only" name="volume-high-outline"></ion-icon>
+            <ion-icon *ngIf="currentTrack.type === ''" slot="icon-only" name="play-outline"></ion-icon>
+          </ion-fab-button>
+        <!-- </ion-fab> -->
+      </ion-col>
+      <ion-col>
+        <h1>Listen Now</h1>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+  <h6 style="margin: 0 0 0 20px;">Current Show:</h6>
+  <ion-card style="margin-top: 10px;">
+    <ion-card-header>
+      <ion-card-title>
+        <h2>The Daft Manifesto</h2>
+      </ion-card-title>
+      <ion-card-subtitle>
+        with DJ POLE-ERD
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><ion-text color="medium">05:00 PM - 07:00 PM MT</ion-text></p>
+      <p>A free-form community radio show on Boise's KRBX 89.9 FM. Slightly more post-punk than pop, but not without plenty of hooks. https://www.facebook.com/TheDaftManifesto</p>
+    </ion-card-content>
+  </ion-card>
+
+  <h6 style="margin: 0 0 0 20px;">On Next:</h6>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <h2>Range Life</h2>
+      </ion-card-title>
+      <ion-card-subtitle>
+        with DJ CHESS
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p><ion-text color="medium">07:00 PM - 09:00 PM MT</ion-text></p>
+      <p>Indie rock, electronic music, information valuable and trivial, mood, fun.</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

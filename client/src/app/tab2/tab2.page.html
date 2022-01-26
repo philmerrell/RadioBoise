@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Archives
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Archives</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+
+    <ion-item>
+      <ion-label>Shows</ion-label>
+      <ion-select cancelText="Cancel" okText="Okay">
+        <ion-select-option *ngFor="let show of archivedShowsList" [value]="show">{{ show.title }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item button="true" id="open-date-input" lines="none">
+      <ion-label>Date</ion-label>
+      <ion-text slot="end">{{ dateValue }}</ion-text>
+      <ion-popover trigger="open-date-input" show-backdrop="false">
+        <ng-template>
+          <ion-datetime
+            #popoverDatetime
+            presentation="date"
+            (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+          ></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+  </ion-card>
+
+  <ion-list-header>
+    <ion-label>
+      <h1 style="font-weight: 600;">Latest</h1>
+    </ion-label>
+  </ion-list-header>
+  <ion-list>
+    <ion-item *ngFor="let archive of archives" (click)="playArchive(archive)" button detail="false">
+      <ion-icon name="play" slot="start" color="tertiary"></ion-icon>
+      <ion-label>
+        <h2>{{ archive.show.title }}</h2>
+        <p>{{ archive.start | date:'shortTime' }} - {{ archive.end | date:'shortTime' }}, {{ archive.start | date:'MMMM d' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
+</ion-content>
