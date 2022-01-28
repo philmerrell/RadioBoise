@@ -6,14 +6,14 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as s3Deploy from 'aws-cdk-lib/aws-s3-deployment';
 import * as targets from 'aws-cdk-lib/aws-route53-targets';
-import * as cdk from 'aws-cdk-lib/core';
+import * as cdk from 'aws-cdk-lib';
 
 
 export class ClientStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     const domain = 'radioboise.philmerrell.com';
-    const sslCertArn = '';
+    const sslCertArn = process.env.SSL_CERT_ARN;
 
     // this should use the accountID to perform the lookup so it gets the sand zoneID and not the prod
     const zone = route53.HostedZone.fromLookup(this, 'GetHostedZone', {
@@ -42,6 +42,18 @@ export class ClientStack extends Stack {
     const distribution = new cloudfront.CloudFrontWebDistribution(this, 'SiteDistribution', {
       defaultRootObject: 'index.html',
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
+      viewerCertificate: {
+        aliases: [domain],
+        props: {
+          acmCertificateArn: sslCertArn,
+          sslSupportMethod: 'sni-only',
+          minimumProtocolVersion: 'TLSv1.1_2016'
+        }
+      },
+      // aliasConfiguration: {
+      //   acmCertRef: sslCertArn,
+      //   names: [domain]
+      // },
       originConfigs: [
         {
           s3OriginSource: {
