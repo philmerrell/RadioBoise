@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { AudioService } from '../audiobar/audio.service';
 import { PlaylistService } from '../audiobar/playlist.service';
 import { Track } from '../audiobar/track.model';
 import { ArchivedShowListItem, ArchiveService, ShowArchiveItem } from '../services/archive.service';
@@ -12,12 +13,13 @@ import { ArchivedShowListItem, ArchiveService, ShowArchiveItem } from '../servic
 export class Tab2Page implements OnInit {
   archivedShowsList: ArchivedShowListItem[] = [];
   archives: ShowArchiveItem[] = [];
-  archiveHeader = 'Latest';
+  filterChipText: string;
+  archivesRequestComplete: boolean;
   
   constructor(
+    private audioService: AudioService,
     public routerOutlet: IonRouterOutlet,
     private archiveService: ArchiveService,
-    private playlistService: PlaylistService,
     private modalController: ModalController) {}
 
   ngOnInit() {
@@ -25,35 +27,45 @@ export class Tab2Page implements OnInit {
     this.getArchives();
   }
 
-  async getArchivedShowsList(show?: ShowArchiveItem) {
+  async getArchivedShowsList() {
     this.archivedShowsList = await this.archiveService.getArchiveShowsList();
   }
 
   async getArchives(archive?: ShowArchiveItem) {
+    this.archivesRequestComplete = false;
     if (archive) {
-      this.archives = await this.archiveService.getArchives('the-daft-manifesto');
+      this.archives = await this.archiveService.getArchives(archive.id);
     } else {
       this.archives = await this.archiveService.getArchives();
     }
+    this.archivesRequestComplete = true;
   }
 
   selectShow(archive: ShowArchiveItem) {
-    console.log(archive);
     this.getArchives(archive);
-    this.archiveHeader = archive.title;
+    this.filterChipText = archive.title;
     this.modalController.dismiss();
   }
 
-  playArchive(archive: ShowArchiveItem) {
-    console.log(archive);
-    this.playlistService.setPlaylist([
-      {
-        song: archive.start,
-        artist: archive.show.title + ' (archive)',
-        audioUrl: archive.audio.url,
-        type: 'file'
-      } as Track
-    ])
+  async playArchive(archive: ShowArchiveItem) {
+    const track = {
+      song: archive.start + ' (archive)',
+      artist: archive.show.title,
+      audioUrl: archive.audio.url,
+      type: 'file'
+    } as Track;
+
+    // this.audioService.pause();
+    // this.playlistService.setPlaylist([
+    //   track
+    // ]);
+    this.audioService.setCurrentTrack(track);
+    this.audioService.play();
+  }
+
+  clearFilter() {
+    this.filterChipText = undefined;
+    this.getArchives();
   }
 
   dismiss() {

@@ -58,12 +58,45 @@ export interface ShowArchiveInfoItem {
   users: any[];
 }
 
+export interface Show {
+  id: number;
+  title: string;
+  name: string;
+  summary: string;
+  description: string;
+  is_retired: boolean;
+  created_at: string;
+  archives_disable_seek: any;
+  updated_at: string;
+  users: any[];
+  image: any;
+}
+
+export interface ShowTrack {
+  id: number;
+  start: string;
+  end: string;
+  song: any;
+  user_id: number;
+  broadcast_id: number;
+  show_id: number;
+  imported_id: number;
+  imported_type: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ArchiveService {
 
   constructor(private http: HttpClient) { }
+
+  async getShows() {
+    return this.http.get(`${environment.apiUrl}/creek/shows`)
+      .pipe(
+        map((response: { data: Show[]}, meta: any) => response.data)
+      ).toPromise();
+  }
 
   async getArchiveShowsList() {
     return this.http.get(`${environment.apiUrl}/creek/archives/shows-list`)
@@ -72,12 +105,20 @@ export class ArchiveService {
       ).toPromise();
   }
 
-  async getArchives(showName?: string): Promise<ShowArchiveItem[]> {
+  async getArchives(showId?: number): Promise<ShowArchiveItem[]> {
     let url = `${environment.apiUrl}/creek/archives`;
-    if (showName) {
-      url = `${url}?showName=${showName}`
+    if (showId) {
+      url = `${url}?showId=${showId}`
     }
     return this.http.get<ArchivesResponse>(url)
+      .pipe(
+        map((response: ArchivesResponse) => response.data)
+      ).toPromise();
+  }
+
+  async getTracks(): Promise<ShowTrack[]> {
+    let url = `${environment.apiUrl}/creek/tracks`;
+    return this.http.get(url)
       .pipe(
         map((response: ArchivesResponse) => response.data)
       ).toPromise();

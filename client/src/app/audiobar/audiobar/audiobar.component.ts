@@ -38,18 +38,12 @@ export class AudiobarComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const changedPlaylist = changes['playlist'].currentValue;
-    if (changedPlaylist) {
-      // TODO: allow for setting index of playlist for current track.
-      this.playlistService.setPlaylist(changedPlaylist);
-      this.setCurrentTrack(changedPlaylist[0]);
-    }
+    
   }
 
   stop() {
     // this.audioService.stop();
     this.audioService.setCurrentTrack({} as Track);
-    // this.playlistService.setPlaylist([]);
   }
 
   play() {
@@ -93,15 +87,6 @@ export class AudiobarComponent implements OnInit {
     }
   }
 
-  getNextTrack() {
-    const index = this.playlist.findIndex(track => track === this.track);
-    const nextTrack = this.playlist[index + 1];
-    this.setCurrentTrack(nextTrack);
-  }
-
-
-
-
   calculateSeekTime(event) {
     if (this.isSeeking) {
       const rangeValue = event.detail.value;
@@ -125,16 +110,6 @@ export class AudiobarComponent implements OnInit {
   getModalHeight() {
     const modal = document.querySelector('ion-modal');
     this.modalHeight = modal.clientHeight;
-  }
-
-  nextTrack() {
-    this.imageLoaded = false;
-    this.playlistService.nextTrack();
-  }
-
-  previousTrack() {
-    this.imageLoaded = false;
-    this.playlistService.previousTrack();
   }
 
   seekAudio(value) {

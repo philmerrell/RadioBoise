@@ -1,4 +1,4 @@
-<ion-toolbar id="audiobar" style="border-top: 1px solid var(--ion-color-light); --background: #000;" button>
+<ion-toolbar id="audiobar" style="border-top: 1px solid var(--ion-color-light)" button>
   <div slot="start">
     <ion-button fill="clear" (click)="toggleAudio($event)" [disabled]="playerStatus === 'loading'" type="button">
       <ion-icon class="player-control" *ngIf="playerStatus === 'paused' || playerStatus === ''" name="play" slot="icon-only"></ion-icon>
@@ -25,72 +25,6 @@
   [presentingElement]="routerOutlet.nativeEl"
 >
   <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Now Playing</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="dismiss()">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <div class="background-texture">
-      <div class="background-texture-image">
-        <img [src]="track.image || 'https://cdn-profiles.tunein.com/s136895/images/logog.png?t=152180'">
-      </div>
-    </div>
-    <ion-content style="--background: transparent">
-      <ion-card>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4">
-              <img src="https://is3-ssl.mzstatic.com/image/thumb/Music128/v4/46/89/f2/4689f288-ed9e-6bb5-af37-c98b58b6733b/4250506825393_1448.jpg/170x170bb.jpg">
-            </ion-col>
-            <ion-col size="8">
-              <ion-item>
-                <ion-label>
-                  <h1>Lambchop</h1>
-                  <h2>Gone Tomorrow</h2>
-                  <p>Mr. M</p>
-                </ion-label>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-
-          </ion-row>
-        </ion-grid>
-        <div class="ion-padding">
-          <div class="track-progress-slider">
-            <ion-range
-              min="0" max="100"
-              [disabled]="playerStatus === 'loading'"
-              (ionFocus)="setIsSeeking()"
-              (ionBlur)="seekAudio($event.target.value)"
-              (ionChange)="calculateSeekTime($event)"
-              [(ngModel)]="percentElapsed">
-            </ion-range>
-          </div>
-          <div class="track-time-layout">
-            <div class="track-time-elapsed">
-              <span *ngIf="!isSeeking">{{ audioElement.currentTime | timeElapsed }}</span>
-              <span *ngIf="isSeeking">{{ seekingTimeElapsed | timeElapsed }}</span>
-            </div>
-            <div class="track-time-spacer"></div>
-            <div class="track-time-remaining">
-              <span>{{ audioElement.currentTime | timeRemaining:audioElement.duration }}</span>
-            </div>
-          </div>
-        </div>
-      </ion-card>
-    </ion-content>
-    <ion-footer>
-      <ion-toolbar></ion-toolbar>
-    </ion-footer>
-
-
-
-
-
     <div class="track-detail-panel">
       <!-- <div class="close-controls">
         <ion-button fill="clear" (click)="closeDetail()">

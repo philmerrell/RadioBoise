@@ -15,8 +15,8 @@ router.use(bodyParser.urlencoded({ extended: true }))
 
 router.get('/creek/archives', async (req, res) => {
     var url = 'https://krbx.studio.creek.org/api/archives';
-    if (req.query.showName) {
-        url = url + '?showName=' + req.query.showName;
+    if (req.query.showId) {
+        url = url + '?showId=' + req.query.showId;
     }
     try {
         const response = await axios({
@@ -31,6 +31,22 @@ router.get('/creek/archives', async (req, res) => {
         next(error)
       }
 })
+router.get('/creek/tracks', async (req, res) => {
+    var url = 'https://krbx.studio.creek.org/api/tracks';
+    try {
+        const response = await axios({
+          method: 'GET',
+          url: url,
+          headers: {
+            Accept: 'application/json'          
+            }
+        });
+        res.json(response.data);
+      } catch (error) {
+        next(error)
+      }
+})
+
 router.get('/creek/tracks', async (req, res) => {
     try {
         const response = await axios({
@@ -53,6 +69,19 @@ router.get('/creek/archives/shows-list', async (req, res) => {
           headers: {
             Accept: 'application/json'          
             }
+        });
+        res.json(response.data);
+      } catch (error) {
+        next(error)
+      }
+})
+
+router.get('/creek/shows', async (req, res) => {
+    try {
+        const response = await axios({
+          method: 'GET',
+          url: `https://krbx.studio.creek.org/api/shows`,
+          headers: { Accept: 'application/json' }
         });
         res.json(response.data);
       } catch (error) {

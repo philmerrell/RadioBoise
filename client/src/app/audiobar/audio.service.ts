@@ -50,29 +50,31 @@ export class AudioService {
     return this.percentElapsed.asObservable();
   }
 
-  public seekAudio(position: number): void {
+  seekAudio(position: number): void {
     this.audio.currentTime = position;
   }
 
-  public getSeekingTimeElapsed(value): number {
+  getSeekingTimeElapsed(value): number {
     const duration = this.getAudioElement().duration;
     return value * duration / 100;
   }
 
-  public getAudioElement(): HTMLAudioElement {
+  getAudioElement(): HTMLAudioElement {
     return this.audio;
   }
 
-  private async setAudio(audio: Track) {
+  async setAudio(audio: Track) {
     if (audio.audioUrl) {
       this.audio.src = audio.audioUrl;
-      // Audio.play({
-      //   audioUrl: audio.audioUrl,
-      //   song: audio.song,
-      //   artist: audio.artist,
-      //   image: audio.image
-      // });
     };
+  }
+
+  pause() {
+    this.audio.pause();
+  }
+
+  async play() {
+    console.log(this.audio)
     await this.audio.play();
   }
 

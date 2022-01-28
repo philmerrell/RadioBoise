@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AudioService } from '../audiobar/audio.service';
-import { PlaylistService } from '../audiobar/playlist.service';
 import { Track } from '../audiobar/track.model';
+import { ArchiveService, Show } from '../services/archive.service';
 
 @Component({
   selector: 'app-tab1',
@@ -11,21 +11,27 @@ import { Track } from '../audiobar/track.model';
 })
 export class Tab1Page implements OnInit {
   currentTrack$: Observable<Track>;
+  shows: Show[] = [];
 
-  constructor(private playlistService: PlaylistService, private audioService: AudioService) {}
+  constructor(private audioService: AudioService, private archiveService: ArchiveService) {}
 
   ngOnInit(): void {
     this.currentTrack$ = this.audioService.getCurrentTrack();
+    // this.getShows();
   }
   playStream() {
-    this.playlistService.setPlaylist([
+    this.audioService.setCurrentTrack(
       {
-        song: 'test',
-        artist: 'test',
+        song: 'Livestream',
+        artist: 'KRBX',
         audioUrl: 'http://radioboise-ice.streamguys1.com/live',
         type: 'livestream'
       } as Track
-    ])
+    )
+  }
+
+  async getShows() {
+    this.shows = await this.archiveService.getShows();
   }
 
 }

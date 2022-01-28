@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AudioService } from '../audiobar/audio.service';
 import { PlaylistService } from '../audiobar/playlist.service';
 import { Track } from '../audiobar/track.model';
 
@@ -9,14 +10,14 @@ import { Track } from '../audiobar/track.model';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
-  playlist$: Observable<Track[]>;
+  currentTrack$: Observable<Track>;
 
   constructor(
-    private playlistService: PlaylistService,
+    private audioService: AudioService,
     ) {}
 
   ngOnInit() {
-    this.playlist$ = this.playlistService.getPlaylist();
+    this.currentTrack$ = this.audioService.getCurrentTrack();
   }
 
 }

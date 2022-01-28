@@ -16,26 +16,15 @@
 
   <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
   <div class="ion-padding">
-    
+    <ion-item>
+      <ion-fab-button slot="start"></ion-fab-button>
+      <ion-label>
+        <h1>Listen Now</h1>
+      </ion-label>
+    </ion-item>
     
   </div>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="auto">
-        <!-- <ion-fab slot="fixed"> -->
-          <ion-fab-button *ngIf="currentTrack$ | async as currentTrack" size="small" (click)="playStream()" color="primary">
-            <ion-icon *ngIf="currentTrack.type === 'livestream'" slot="icon-only" name="volume-high-outline"></ion-icon>
-            <ion-icon *ngIf="currentTrack.type === ''" slot="icon-only" name="play-outline"></ion-icon>
-          </ion-fab-button>
-        <!-- </ion-fab> -->
-      </ion-col>
-      <ion-col>
-        <h1>Listen Now</h1>
-      </ion-col>
-      
-    </ion-row>
-  </ion-grid>
-  <h6 style="margin: 0 0 0 20px;">Current Show:</h6>
+  <h6 style="margin: 20px 0 0 20px;">Current Show:</h6>
   <ion-card style="margin-top: 10px;">
     <ion-card-header>
       <ion-card-title>

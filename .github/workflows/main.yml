@@ -33,10 +33,10 @@ jobs:
           sudo npm install 
 
       # Runs a set of commands using the runners shell
-      - name: Test Client
-        run: |
-          cd client && npm install
-          ng test --configuration=ci
+      # - name: Test Client
+      #   run: |
+      #     cd client && npm install
+      #     ng test --configuration=ci
 
       - name: Build Client
         run: |
