@@ -42,4 +42,4 @@ jobs:
 
       - name: Build Client
         run: |
-          cd client && ng build --prod
+          cd client && ng build --configuration=production

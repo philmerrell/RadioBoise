@@ -10,7 +10,7 @@ import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import { EndpointType } from 'aws-cdk-lib/aws-apigateway';
 
 
-export class AwsIonicStarterApiStack extends Stack {
+export class ApiStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
 
@@ -18,7 +18,6 @@ export class AwsIonicStarterApiStack extends Stack {
 
 
     const sslCertArn = process.env.SSL_CERT_ARN;
-    const clientDomainName = process.env.CLIENT_DOMAIN_NAME;
 
 
 
@@ -31,10 +30,7 @@ export class AwsIonicStarterApiStack extends Stack {
       code: new lambda.AssetCode('../api'),
       handler: 'lambda.handler',
       runtime: lambda.Runtime.NODEJS_12_X,
-      timeout: cdk.Duration.seconds(10),
-      environment: {
-        CLIENT_DOMAIN_NAME: `https://${clientDomainName}`,
-      }
+      timeout: cdk.Duration.seconds(10)
     });
 
 
@@ -58,7 +54,7 @@ export class AwsIonicStarterApiStack extends Stack {
       defaultCorsPreflightOptions: {
         allowOrigins: [
           "http://localhost:8100",
-          `https://${clientDomainName}`
+          `https://radioboise.philmerrell.com`
         ],
         allowMethods: [
           "GET",
