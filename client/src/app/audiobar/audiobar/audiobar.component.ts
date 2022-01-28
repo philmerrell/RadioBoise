@@ -1,6 +1,5 @@
 import { Component, Input, NgZone, OnInit, SimpleChanges } from '@angular/core';
-import { IonRouterOutlet } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { AudioService } from '../audio.service';
 import { PlaylistService } from '../playlist.service';
 import { Track } from '../track.model';
@@ -25,8 +24,8 @@ export class AudiobarComponent implements OnInit {
   seekingTimeElapsed: number;
   
   constructor(
+    private modalController: ModalController,
     public routerOutlet: IonRouterOutlet,
-    private playlistService: PlaylistService,
     private audioService: AudioService,
     private zone: NgZone) { }
 
@@ -39,6 +38,29 @@ export class AudiobarComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     
+  }
+
+  stopProp(e: any): void {
+    e.stopPropagation();
+  }
+
+  pauseSeeking(ev: any): void {
+    console.log(ev);
+    this.stopProp(ev);
+    this.isSeeking = true;
+    this.percentElapsed = ev.target.value;
+  }
+
+  async seekToTime(ev: any): Promise<void> {
+    this.stopProp(ev);
+    const position = ev.target.value / (100 / this.audioService.getAudioElement().duration);
+    this.audioService.seekAudio(position);
+    // await this.player.seekToTime(ev.target.value);
+    this.isSeeking = false;
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
   }
 
   stop() {
@@ -70,7 +92,7 @@ export class AudiobarComponent implements OnInit {
 
   getTimeRemaining() {}
 
-  toggleAudio(event: PointerEvent) {
+  toggleAudio(event: MouseEvent) {
     console.log(event);
     event.stopPropagation();
     this.audioService.toggleAudio();
@@ -79,12 +101,6 @@ export class AudiobarComponent implements OnInit {
   private getCurrentTrack() {
     this.audioService.getCurrentTrack()
       .subscribe(track => this.track = track);
-  }
-
-  private setCurrentTrack(track: Track) {
-    if (track) {
-      this.audioService.setCurrentTrack(track);
-    }
   }
 
   calculateSeekTime(event) {
@@ -112,10 +128,11 @@ export class AudiobarComponent implements OnInit {
     this.modalHeight = modal.clientHeight;
   }
 
-  seekAudio(value) {
+  seekAudio(event) {
+    console.log(event);
     this.isSeeking = false;
-    const position = value / (100 / this.audioService.getAudioElement().duration);
-    this.audioService.seekAudio(position);
+    // const position = value / (100 / this.audioService.getAudioElement().duration);
+    // this.audioService.seekAudio(position);
   }
 
   setIsSeeking() {

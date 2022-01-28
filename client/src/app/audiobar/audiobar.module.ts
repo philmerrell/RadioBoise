@@ -5,6 +5,7 @@ import { AudiobarComponent } from './audiobar/audiobar.component';
 import { FormsModule } from '@angular/forms';
 import { TimeRemainingPipe } from './time-remaining.pipe';
 import { TimeElapsedPipe } from './time-elapsed.pipe';
+import { IonRangeDirectiveModule } from '../directives/ion-range/ion-range.module';
 
 
 
@@ -13,7 +14,8 @@ import { TimeElapsedPipe } from './time-elapsed.pipe';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    IonRangeDirectiveModule
   ],
   exports: [
     AudiobarComponent,

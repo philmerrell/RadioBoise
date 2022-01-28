@@ -64,11 +64,11 @@
             <ion-range
               min="0" max="100"
               [disabled]="playerStatus === 'loading'"
-              (ionFocus)="setIsSeeking()"
-              (ionBlur)="seekAudio($event.target.value)"
-              (ionChange)="calculateSeekTime($event)"
-              [(ngModel)]="percentElapsed">
-            </ion-range>
+              [(ngModel)]="percentElapsed"
+              (click)="stopProp($event)"
+              (ionStart)="pauseSeeking($event)"
+              (ionEnd)="seekToTime($event)"
+            ></ion-range>
           </div>
           <div class="track-time-layout">
             <div class="track-time-elapsed">
@@ -86,107 +86,5 @@
     <ion-footer>
       <ion-toolbar></ion-toolbar>
     </ion-footer>
-
-
-
-
-
-    <div class="track-detail-panel">
-      <!-- <div class="close-controls">
-        <ion-button fill="clear" (click)="closeDetail()">
-          <ion-icon name="arrow-down" slot="icon-only"></ion-icon>
-        </ion-button>
-      </div> -->
-
-      <!-- // TODO: Find better image sizing solution  -->
-      <div class="background-texture">
-        <div class="background-texture-image">
-          <img [src]="track.image || 'https://cdn-profiles.tunein.com/s136895/images/logog.png?t=152180'">
-        </div>
-      </div>
-
-      <!-- <div [style.height.px]="modalHeight / 2" style="padding: 20px;">
-        <ial-playlist-slides></ial-playlist-slides>
-      </div> -->
-
-      <div class="image-container">
-        <ion-img
-          [class.pause-state]="playerStatus === 'paused'"
-          [class.play-state]="playerStatus === 'playing'"
-          [src]="track.image || 'https://cdn-profiles.tunein.com/s136895/images/logog.png?t=152180'"
-          height="90%">
-        </ion-img>
-      </div>
-
-      <div [style.height.px]="modalHeight * 0.25" class="track-detail-controls-container">
-        <div class="track-progress-slider">
-          <ion-range
-            min="0" max="100"
-            [disabled]="playerStatus === 'loading'"
-            (ionFocus)="setIsSeeking()"
-            (ionBlur)="seekAudio($event.target.value)"
-            (ionChange)="calculateSeekTime($event)"
-            [(ngModel)]="percentElapsed">
-          </ion-range>
-        </div>
-        <div class="track-time-layout">
-          <div class="track-time-elapsed">
-            <span *ngIf="!isSeeking">{{ audioElement.currentTime | timeElapsed }}</span>
-            <span *ngIf="isSeeking">{{ seekingTimeElapsed | timeElapsed }}</span>
-          </div>
-          <div class="track-time-spacer"></div>
-          <div class="track-time-remaining">
-            <span>{{ audioElement.currentTime | timeRemaining:audioElement.duration }}</span>
-          </div>
-        </div>
-        <div class="track-detail-info">
-          <div class="marquee-container">
-            <div class="marquee-container-inner">
-
-              <h4 style="padding-right: 50px; display: inline-block; animation-play-state: running;
-              animation-delay: 4s;
-              animation-duration: 14s; max-width: none;" class="animate">
-                {{ track?.artist }}
-              </h4>
-              <h4 style="padding-right: 50px; display: inline-block; animation-play-state: running;
-                animation-delay: 4s;
-                animation-duration: 14s; max-width: none;" class="animate">
-                {{ track?.artist }}
-              </h4>
-            </div>
-          </div>
-          <h5 [attr.content]="track?.song">
-            {{ track?.song }}
-          </h5>
-        </div>
-      </div>
-      <div [style.height.px]="modalHeight * 0.25">
-        <div class="track-controls-layout">
-          <ion-button
-            fill="clear"
-            size="large"
-            (click)="previousTrack()"
-            [disabled]="playerStatus === 'loading'">
-            <ion-icon name="rewind"></ion-icon>
-          </ion-button>
-          <ion-button
-            style="width: 100px;"
-            fill="clear"
-            size="large"
-            (click)="toggleAudio($event)" [ngSwitch]="playerStatus" [disabled]="playerStatus === 'loading'" class="controls-pp" type="button">
-            <ion-icon *ngSwitchCase="'paused'" name="play" slot="icon-only"></ion-icon>
-            <ion-icon *ngSwitchCase="'playing'" name="pause" slot="icon-only"></ion-icon>
-            <ion-spinner *ngSwitchCase="'loading'" name="crescent"></ion-spinner>
-          </ion-button>
-          <ion-button
-            size="large"
-            fill="clear"
-            (click)="nextTrack()"
-            [disabled]="playerStatus === 'loading'">
-            <ion-icon name="fastforward"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </div>
   </ng-template>
 </ion-modal>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { AudioService } from '../audiobar/audio.service';
-import { PlaylistService } from '../audiobar/playlist.service';
 import { Track } from '../audiobar/track.model';
 import { ArchivedShowListItem, ArchiveService, ShowArchiveItem } from '../services/archive.service';
 
@@ -31,7 +30,7 @@ export class Tab2Page implements OnInit {
     this.archivedShowsList = await this.archiveService.getArchiveShowsList();
   }
 
-  async getArchives(archive?: ShowArchiveItem) {
+  async getArchives(archive?: ArchivedShowListItem) {
     this.archivesRequestComplete = false;
     if (archive) {
       this.archives = await this.archiveService.getArchives(archive.id);
@@ -41,7 +40,7 @@ export class Tab2Page implements OnInit {
     this.archivesRequestComplete = true;
   }
 
-  selectShow(archive: ShowArchiveItem) {
+  selectShow(archive: ArchivedShowListItem) {
     this.getArchives(archive);
     this.filterChipText = archive.title;
     this.modalController.dismiss();
