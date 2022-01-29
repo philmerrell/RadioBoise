@@ -30,10 +30,6 @@ export class ClientStack extends Stack {
       bucketName: domain,
       websiteIndexDocument: 'index.html',
       publicReadAccess: true,
-
-      // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete
-      // the new bucket, and it will remain in your account until manually deleted. By setting the policy to
-      // DESTROY, cdk destroy will attempt to delete the bucket, but will error if the bucket is not empty.
       removalPolicy: cdk.RemovalPolicy.DESTROY, // NOT recommended for production code
     });
     new cdk.CfnOutput(this, 'Bucket', { value: siteBucket.bucketName });
@@ -92,6 +88,7 @@ export class ClientStack extends Stack {
       sources: [s3Deploy.Source.asset('../client/www')],
       destinationBucket: siteBucket,
       distribution,
+      memoryLimit: 512,
       distributionPaths: ['/*'],
     });
   }
