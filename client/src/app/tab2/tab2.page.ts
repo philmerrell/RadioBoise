@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { AudioService } from '../audiobar/audio.service';
@@ -17,6 +18,7 @@ export class Tab2Page implements OnInit {
   
   constructor(
     private audioService: AudioService,
+    private datePipe: DatePipe,
     public routerOutlet: IonRouterOutlet,
     private archiveService: ArchiveService,
     private modalController: ModalController) {}
@@ -48,7 +50,7 @@ export class Tab2Page implements OnInit {
 
   async playArchive(archive: ShowArchiveItem) {
     const track = {
-      song: archive.start + ' (archive)',
+      song: this.datePipe.transform(archive.start, 'EEEE, MMMM d') + ' (archive)',
       artist: archive.show.title,
       audioUrl: archive.audio.url,
       type: 'file'

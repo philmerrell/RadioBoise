@@ -1,4 +1,4 @@
-<ion-toolbar id="audiobar" style="border-top: 1px solid var(--ion-color-light); --background: #000;" button>
+<ion-toolbar id="audiobar" style="border-top: 1px solid var(--ion-color-light); --background: #000;" translucent="true" button>
   <div slot="start">
     <ion-button fill="clear" (click)="toggleAudio($event)" [disabled]="playerStatus === 'loading'" type="button">
       <ion-icon class="player-control" *ngIf="playerStatus === 'paused' || playerStatus === ''" name="play" slot="icon-only"></ion-icon>
@@ -8,7 +8,7 @@
   </div>
   <div>
     <h5 style="margin: 0">{{ track.artist }}</h5>
-    <h6 style="margin: 0"><ion-text color="medium">{{ track.song }}</ion-text></h6>
+    <h6 style="margin: 0; font-size: 0.8em;"><ion-text color="medium">{{ track.song }}</ion-text></h6>
   </div>
   <!-- <div slot="end">
     <ion-button (click)="stop()" fill="clear">

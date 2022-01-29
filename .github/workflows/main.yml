@@ -43,3 +43,12 @@ jobs:
       - name: Build Client
         run: |
           cd client && ng build --configuration=production
+
+      - name: Install Infrastructure Dependencies
+        run: |
+          cd infrastructure
+          sudo npm install
+
+      - name: cdk deploy
+        run: |
+          cdk deploy ClientStack
