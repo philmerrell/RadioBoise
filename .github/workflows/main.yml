@@ -64,4 +64,5 @@ jobs:
 
       - name: cdk deploy
         run: |
+          cd infrastructure
           cdk deploy --app ClientStack
