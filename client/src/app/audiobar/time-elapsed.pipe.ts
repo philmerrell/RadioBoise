@@ -10,9 +10,10 @@ export class TimeElapsedPipe implements PipeTransform {
     const seconds = Math.floor(currentTime % 60),
       displaySecs = (seconds < 10) ? '0' + seconds : seconds,
       minutes     = Math.floor((currentTime / 60) % 60),
-      displayMins = (minutes < 10) ? '0' + minutes : minutes;
+      displayMins = (minutes < 10) ? '0' + minutes : minutes,
+      hours       = Math.floor((currentTime / 60 / 60) % 60);
 
-    return displayMins + ':' + displaySecs;
+    return hours + ':' + displayMins + ':' + displaySecs;
   }
 
 }

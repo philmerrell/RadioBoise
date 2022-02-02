@@ -14,8 +14,6 @@ export class AudiobarComponent implements OnInit {
   @Input() playlist: Track[] = [];
   audioElement: HTMLAudioElement;
   track: Track;
-  // percentElapsed$: Observable<number>;
-  // percentLoaded$: Observable<number>;
   playerStatus: string = '';
   imageLoaded: boolean;
   isSeeking: boolean;
@@ -34,28 +32,24 @@ export class AudiobarComponent implements OnInit {
     this.getCurrentTrack();
     this.getPlayerStatus();
     this.getPercentElapsed();
+    this.getCurrentTrack();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    
+  ngOnChanges(changes: SimpleChanges) {}
+
+  pauseSeeking(ev: any): void {
+    this.stopProp(ev);
+    this.isSeeking = true;
   }
 
   stopProp(e: any): void {
     e.stopPropagation();
   }
 
-  pauseSeeking(ev: any): void {
-    console.log(ev);
-    this.stopProp(ev);
-    this.isSeeking = true;
-    this.percentElapsed = ev.target.value;
-  }
-
   async seekToTime(ev: any): Promise<void> {
     this.stopProp(ev);
     const position = ev.target.value / (100 / this.audioService.getAudioElement().duration);
     this.audioService.seekAudio(position);
-    // await this.player.seekToTime(ev.target.value);
     this.isSeeking = false;
   }
 
@@ -67,18 +61,6 @@ export class AudiobarComponent implements OnInit {
     // this.audioService.stop();
     this.audioService.setCurrentTrack({} as Track);
   }
-
-  play() {
-    // this.audioService.play();
-  }
-
-  // getPercentElapsed() {
-  //   this.percentElapsed$ = this.audioService.getPercentElapsed();
-  // }
-
-  // getPercentLoaded() {
-  //   this.percentLoaded$ = this.audioService.getPercentLoaded();
-  // }
 
   getPlayerStatus() {
     this.audioService.getPlayerStatus()
@@ -119,29 +101,9 @@ export class AudiobarComponent implements OnInit {
 
   }
 
-  closeDetail() {
-    // this.close.emit(true);
-  }
-
-  getModalHeight() {
-    const modal = document.querySelector('ion-modal');
-    this.modalHeight = modal.clientHeight;
-  }
-
-  seekAudio(event) {
-    console.log(event);
-    this.isSeeking = false;
-    // const position = value / (100 / this.audioService.getAudioElement().duration);
-    // this.audioService.seekAudio(position);
-  }
-
   setIsSeeking() {
     this.isSeeking = true;
   }
-
-  // toggleAudio() {
-  //   this.audioService.toggleAudio();
-  // }
 
   imageLoadedHander(event) {
     this.imageLoaded = true;
@@ -155,12 +117,5 @@ export class AudiobarComponent implements OnInit {
         }
       });
   }
-
-  // private subscribeToPlayerStatus() {
-  //   this.audioService.getPlayerStatus()
-  //       .subscribe(status => {
-  //         this.playerStatus = status;
-  //       });
-  // }
 
 }

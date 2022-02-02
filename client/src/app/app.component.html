@@ -3,11 +3,6 @@
     <ion-menu [swipeGesture]="false" contentId="content" type="overlay">
       <div style="background: #000; padding: 20px 20px 0 20px;">
         <img src="/assets/RadioBoise-Logo.png">
-        <!-- <div style="margin-top: 20px">
-          <ion-fab-button color="warning">
-            <ion-icon name="play"></ion-icon>
-          </ion-fab-button>
-        </div> -->
       </div>
       <div style="background: #000;">
         <ion-grid *ngIf="currentTrack" style="margin-top: 20px;">
@@ -21,8 +16,8 @@
             </ion-col>
             <ion-col>
               <!-- <ion-text style="margin-top: 10px;" color="medium">Current Show:</ion-text> -->
-              <h2 style="margin-top: 0px;">{{ currentTrack.artist }}</h2>
-              <ion-text color="medium">{{ currentTrack.song }}</ion-text>
+              <h2 style="margin-top: 0px; margin-bottom: 0px;">{{ currentTrack.artist }}</h2>
+              <ion-text style="margin-top: 10px;" color="medium">{{ currentTrack.song }}</ion-text>
             </ion-col>
           </ion-row>        
         </ion-grid>

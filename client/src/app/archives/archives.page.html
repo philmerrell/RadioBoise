@@ -3,9 +3,9 @@
     <ion-title>
       Archives
     </ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button id="showFilter">Shows</ion-button>
-    </ion-buttons> -->
+    <ion-buttons slot="end">
+      <ion-button id="showFilter" color="primary" fill="outline" >Filter Shows</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -21,21 +21,28 @@
   <div class="ion-padding">
     <ion-chip *ngIf="filterChipText">
       <ion-label>{{ filterChipText }}</ion-label>
-      <ion-icon (click)="clearFilter()" name="close"></ion-icon>
+      <ion-icon (click)="clearFilter()" name="close" color="primary"></ion-icon>
     </ion-chip>
   </div>
+
 
   <ion-item *ngIf="!filterChipText" lines="none">
     <ion-label>
       <h1 style="font-weight: 600;">Latest</h1>
-      
-      
     </ion-label>
-    <ion-button slot="end" fill="outline" id="showFilter">Filter</ion-button>
   </ion-item>
+
   <ion-list *ngIf="archivesRequestComplete">
-    <ion-item *ngFor="let archive of archives" (click)="playArchive(archive)" button detail="false">
-      <ion-icon name="play-outline" slot="start" color="warning"></ion-icon>
+    <ion-item *ngFor="let archive of archives" detail="false">
+      <ion-thumbnail *ngIf="archive.id === currentArchivePlaying?.id" style="margin-right: 32px;" slot="start">
+        <div style="padding: 10px;">
+          <svg-bars class="playing"></svg-bars>
+        </div>
+      </ion-thumbnail>
+      <ion-fab-button *ngIf="archive.id !== currentArchivePlaying?.id" (click)="playArchive(archive)" color="light" slot="start">
+
+        <ion-icon name="play-outline" color="warning"></ion-icon>
+      </ion-fab-button>
       <ion-label>
         <h2>{{ archive.show.title }}</h2>
         <p>{{ archive.start | date:'shortTime' }} - {{ archive.end | date:'shortTime' }}, {{ archive.start | date:'MMMM d' }}</p>
@@ -154,7 +161,7 @@
       <ion-toolbar>
         <ion-title>Shows</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="dismiss()">Close</ion-button>
+          <ion-button (click)="dismiss()" color="primary">Close</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>

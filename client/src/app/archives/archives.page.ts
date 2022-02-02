@@ -6,20 +6,22 @@ import { Track } from '../audiobar/track.model';
 import { ArchivedShowListItem, ArchiveService, ShowArchiveItem } from '../services/archive.service';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-archives',
+  templateUrl: 'archives.page.html',
+  styleUrls: ['archives.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class ArchivesPage implements OnInit {
   archivedShowsList: ArchivedShowListItem[] = [];
   archives: ShowArchiveItem[] = [];
-  filterChipText: string;
   archivesRequestComplete: boolean;
+  currentArchivePlaying: ShowArchiveItem;
+  filterChipText: string;
+
   
   constructor(
+    public routerOutlet: IonRouterOutlet,
     private audioService: AudioService,
     private datePipe: DatePipe,
-    public routerOutlet: IonRouterOutlet,
     private archiveService: ArchiveService,
     private modalController: ModalController) {}
 
@@ -55,6 +57,8 @@ export class Tab2Page implements OnInit {
       audioUrl: archive.audio.url,
       type: 'file'
     } as Track;
+
+    this.currentArchivePlaying = archive;
 
     // this.audioService.pause();
     // this.playlistService.setPlaylist([

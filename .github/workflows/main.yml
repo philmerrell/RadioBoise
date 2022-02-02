@@ -44,6 +44,12 @@ jobs:
         run: |
           cd client && ng build --configuration=production
 
+      - name: Install cdk
+        run: |
+          npm install -g aws-cdk
+          npm install -g aws-cli      
+          cdk bootstrap aws://${{ secrets.AWS_ACCOUNT_ID }}/us-west-2
+
       - name: Install Infrastructure Dependencies
         run: |
           cd infrastructure

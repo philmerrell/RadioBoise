@@ -43,13 +43,9 @@ export class ClientStack extends Stack {
         props: {
           acmCertificateArn: sslCertArn,
           sslSupportMethod: 'sni-only',
-          minimumProtocolVersion: 'TLSv1.1_2016'
+          minimumProtocolVersion: 'TLSv1.2_2021'
         }
       },
-      // aliasConfiguration: {
-      //   acmCertRef: sslCertArn,
-      //   names: [domain]
-      // },
       originConfigs: [
         {
           s3OriginSource: {
