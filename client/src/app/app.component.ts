@@ -12,6 +12,7 @@ import { ArchiveService } from './services/archive.service';
 export class AppComponent implements OnInit {
   isSplitPaneVisible = true;
   tracks = [];
+  tracksRequestComplete: boolean;
   currentTrack: Track;
   playerStatus = '';
   isSeeking: boolean;
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     this.getCurrentTrack();
     this.initLivestream();
     this.getPercentElapsed();
-    this.tracks = await this.archiveService.getTracks();
+    this.getTracks();
   }
 
   initLivestream() {
@@ -100,7 +101,9 @@ export class AppComponent implements OnInit {
   }
 
   async getTracks() {
+    this.tracksRequestComplete = false;
     this.tracks = await this.archiveService.getTracks();
+    this.tracksRequestComplete = true;
   }
 
   getPlayerStatus() {

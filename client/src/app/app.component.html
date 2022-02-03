@@ -22,7 +22,7 @@
           </ion-row>
         </ion-grid>
         <div *ngIf="currentTrack" class="track-progress-slider">
-          <ion-grid>
+          <ion-grid *ngIf="currentTrack.type !== 'livestream'">
             <ion-row>
               <ion-col size="auto">
                 <ion-button (click)="seekBackward()" fill="clear" size="small">
@@ -30,7 +30,7 @@
                 </ion-button>
               </ion-col>
               <ion-col>
-                <ion-range *ngIf="currentTrack.type !== 'livestream'"
+                <ion-range
                   min="0" max="100"
                   [disabled]="playerStatus === 'loading'"
                   [(ngModel)]="percentElapsed"
@@ -94,13 +94,13 @@
           </ion-grid>
         </ion-card>
 
-        <!-- <ion-card> -->
-          <ion-list-header>
+          <ion-item>
             <ion-label>
               <h3>Recently Played:</h3>
             </ion-label>
-          </ion-list-header>
-          <ion-list style="background: transparent">
+            <ion-button (click)="getTracks()" fill="clear">Refresh</ion-button>
+          </ion-item>
+          <ion-list *ngIf="tracksRequestComplete" style="background: transparent">
             <ion-item *ngFor="let track of tracks | slice:1:20" style="--background: transparent;" button>
               <ion-label>
                 <h2>{{ track.song.artist }}</h2>
@@ -108,7 +108,59 @@
               </ion-label>
             </ion-item>
           </ion-list>
-        <!-- </ion-card> -->
+
+          <ion-list *ngIf="!tracksRequestComplete" style="background: transparent">
+            <ion-item style="--background: transparent;">
+              <ion-label>
+                <h1>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </h1>
+                <p>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item style="--background: transparent;">
+              <ion-label>
+                <h1>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </h1>
+                <p>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item style="--background: transparent;">
+              <ion-label>
+                <h1>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </h1>
+                <p>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item style="--background: transparent;">
+              <ion-label>
+                <h1>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </h1>
+                <p>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item style="--background: transparent;">
+              <ion-label>
+                <h1>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </h1>
+                <p>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
         
       </ion-content>
     </ion-menu>
