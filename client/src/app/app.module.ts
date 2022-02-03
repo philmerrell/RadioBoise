@@ -11,6 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { TimePipesModule } from './directives/time-pipes/time-pipes.module';
+import { IonRangeDirectiveModule } from './directives/ion-range/ion-range.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { TimePipesModule } from './directives/time-pipes/time-pipes.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    IonRangeDirectiveModule,
     FormsModule,
     TimePipesModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

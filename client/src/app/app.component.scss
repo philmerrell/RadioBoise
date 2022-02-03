@@ -29,3 +29,31 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
+
+  .track-time-layout {
+    display: table;
+    padding-top: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0;
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  .track-time-layout .track-time-elapsed {
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+    width: 1%;
+  }
+  .track-time-layout .track-time-spacer {
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+  }
+  .track-time-layout  .track-time-remaining {
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+    width: 1%;
+  }

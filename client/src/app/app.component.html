@@ -21,19 +21,35 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-        <div *ngIf="currentTrack.type !== 'livestream'" class="track-progress-slider">
+        <div *ngIf="currentTrack" class="track-progress-slider">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="auto">
+                <ion-button (click)="seekBackward()" fill="clear" size="small">
+                  <ion-icon slot="icon-only" name="refresh" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-range *ngIf="currentTrack.type !== 'livestream'"
+                  min="0" max="100"
+                  [disabled]="playerStatus === 'loading'"
+                  [(ngModel)]="percentElapsed"
+                  (click)="stopProp($event)"
+                  (ionChange)="calculateSeekTime($event)"
+                  (ionStart)="pauseSeeking($event)"
+                  (ionEnd)="seekToTime($event)"
+                ></ion-range>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-button (click)="seekForward()" fill="clear" size="small">
+                  <ion-icon slot="icon-only" name="refresh"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
             
-          <ion-range
-            min="0" max="100"
-            [disabled]="playerStatus === 'loading'"
-            [(ngModel)]="percentElapsed"
-            (click)="stopProp($event)"
-            (ionChange)="calculateSeekTime($event)"
-            (ionStart)="pauseSeeking($event)"
-            (ionEnd)="seekToTime($event)"
-          ></ion-range>
         </div>
-        <div  *ngIf="currentTrack.type !== 'livestream'" class="track-time-layout">
+        <div  *ngIf="currentTrack && currentTrack.type !== 'livestream'" class="track-time-layout">
           <div class="track-time-elapsed">
             <span *ngIf="!isSeeking">{{ audioElement.currentTime | timeElapsed }}</span>
             <span *ngIf="isSeeking">{{ seekingTimeElapsed | timeElapsed }}</span>

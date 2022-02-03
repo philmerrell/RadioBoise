@@ -1,7 +1,6 @@
 import { Component, Input, NgZone, OnInit, SimpleChanges } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { AudioService } from '../audio.service';
-import { PlaylistService } from '../playlist.service';
 import { Track } from '../track.model';
 
 @Component({
