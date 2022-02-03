@@ -19,8 +19,30 @@
               <h2 style="margin-top: 0px; margin-bottom: 0px;">{{ currentTrack.artist }}</h2>
               <ion-text style="margin-top: 10px;" color="medium">{{ currentTrack.song }}</ion-text>
             </ion-col>
-          </ion-row>        
+          </ion-row>
         </ion-grid>
+        <div *ngIf="currentTrack.type !== 'livestream'" class="track-progress-slider">
+            
+          <ion-range
+            min="0" max="100"
+            [disabled]="playerStatus === 'loading'"
+            [(ngModel)]="percentElapsed"
+            (click)="stopProp($event)"
+            (ionChange)="calculateSeekTime($event)"
+            (ionStart)="pauseSeeking($event)"
+            (ionEnd)="seekToTime($event)"
+          ></ion-range>
+        </div>
+        <div  *ngIf="currentTrack.type !== 'livestream'" class="track-time-layout">
+          <div class="track-time-elapsed">
+            <span *ngIf="!isSeeking">{{ audioElement.currentTime | timeElapsed }}</span>
+            <span *ngIf="isSeeking">{{ seekingTimeElapsed | timeElapsed }}</span>
+          </div>
+          <div class="track-time-spacer"></div>
+          <div class="track-time-remaining">
+            <span>{{ audioElement.currentTime | timeRemaining:audioElement.duration }}</span>
+          </div>
+        </div>
       </div>
 
       <div class="background-texture">

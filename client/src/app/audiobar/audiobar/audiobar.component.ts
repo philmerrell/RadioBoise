@@ -53,6 +53,16 @@ export class AudiobarComponent implements OnInit {
     this.isSeeking = false;
   }
 
+  seekForward() {
+    const newTime = this.audioElement.currentTime + 30
+    this.audioService.seekAudio(newTime);
+  }
+
+  seekBackward() {
+    const newTime = this.audioElement.currentTime - 30
+    this.audioService.seekAudio(newTime);
+  }
+
   dismiss() {
     this.modalController.dismiss();
   }
