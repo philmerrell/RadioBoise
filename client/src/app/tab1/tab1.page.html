@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Schedule
+      On Air
       <!-- <ion-img style="height: 40px;" src="/assets/RadioBoise-Logo.png"></ion-img> -->
     </ion-title>
   </ion-toolbar>
@@ -10,22 +10,33 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Schedule</ion-title>
+      <ion-title size="large">On Air</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
-  <div class="ion-padding">
-    <ion-list-header>On Air</ion-list-header>
-    <ion-item>
-      <ion-fab-button slot="start"></ion-fab-button>
-      <ion-label>
-        <h1>Listen Now</h1>
-        <p>Live</p>
-      </ion-label>
-    </ion-item>
+  <!-- <div class="ion-padding"> -->
+    <h6 style="margin: 20px 0 0 20px;">Listen Now:</h6>
+    <ion-card>
+      <!-- <ion-list-header>KRBX</ion-list-header> -->
+      <ion-item>
+
+        <ion-fab-button *ngIf="currentTrack.type !== 'livestream'" (click)="playStream()" slot="start" color="light" fill="outline">
+          <ion-icon name="play-outline" color="warning"></ion-icon>
+        </ion-fab-button>
+        <ion-thumbnail *ngIf="currentTrack.type === 'livestream'" style="margin-right: 32px;" slot="start">
+          <div style="padding: 10px;">
+            <svg-bars [class.playing]="playerStatus === 'playing' "></svg-bars>
+          </div>
+        </ion-thumbnail>
+        <ion-label>
+          <h1>Live</h1>
+          <p>KRBX</p>
+        </ion-label>
+      </ion-item>
+    </ion-card>
     
-  </div>
+  <!-- </div> -->
   <h6 style="margin: 20px 0 0 20px;">Current Show:</h6>
   <ion-card style="margin-top: 10px;">
     <ion-card-header>

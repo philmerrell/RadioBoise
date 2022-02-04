@@ -10,15 +10,18 @@ import { ArchiveService, Show } from '../services/archive.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  currentTrack$: Observable<Track>;
+  currentTrack: Track;
   shows: Show[] = [];
+  playerStatus = '';
 
-  constructor(private audioService: AudioService, private archiveService: ArchiveService) {}
+  constructor(private audioService: AudioService) {}
 
   ngOnInit(): void {
-    this.currentTrack$ = this.audioService.getCurrentTrack();
-    // this.getShows();
+    this.audioService.getCurrentTrack().subscribe(track => this.currentTrack = track);
+    this.audioService.getPlayerStatus().subscribe(status => this.playerStatus = status);
+
   }
+
   playStream() {
     this.audioService.setCurrentTrack(
       {
@@ -28,10 +31,8 @@ export class Tab1Page implements OnInit {
         type: 'livestream'
       } as Track
     )
+    this.audioService.play();
   }
-
-  async getShows() {
-    this.shows = await this.archiveService.getShows();
-  }
+  
 
 }

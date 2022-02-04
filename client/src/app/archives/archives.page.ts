@@ -16,6 +16,8 @@ export class ArchivesPage implements OnInit {
   archivesRequestComplete: boolean;
   currentArchivePlaying: ShowArchiveItem;
   filterChipText: string;
+  currentTrack: Track;
+  playerStatus = '';
 
   
   constructor(
@@ -28,6 +30,12 @@ export class ArchivesPage implements OnInit {
   ngOnInit() {
     this.getArchivedShowsList();
     this.getArchives();
+    this.getCurrentTrack();
+    this.getPlayerStatus();
+  }
+
+  getPlayerStatus() {
+    this.audioService.getPlayerStatus().subscribe(status => this.playerStatus = status);
   }
 
   async getArchivedShowsList() {
@@ -55,26 +63,29 @@ export class ArchivesPage implements OnInit {
       song: this.datePipe.transform(archive.start, 'EEEE, MMMM d') + ' (archive)',
       artist: archive.show.title,
       audioUrl: archive.audio.url,
-      type: 'file'
+      type: 'archive'
     } as Track;
 
     this.currentArchivePlaying = archive;
-
-    // this.audioService.pause();
-    // this.playlistService.setPlaylist([
-    //   track
-    // ]);
     this.audioService.setCurrentTrack(track);
     this.audioService.play();
   }
 
   clearFilter() {
-    this.filterChipText = undefined;
+    this.filterChipText = null;
     this.getArchives();
   }
 
   dismiss() {
     this.modalController.dismiss();
+  }
+
+  getCurrentTrack() {
+    this.audioService.getCurrentTrack().subscribe(track => {
+      if (track.type === 'livestream') {
+        this.currentArchivePlaying = null;
+      }
+    })
   }
 
 }

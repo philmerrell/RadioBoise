@@ -4,6 +4,6 @@ export interface Track {
     artist: string;
     song: string;
     index: number;
-    type: 'livestream' | 'file'
+    type: 'livestream' | 'archive'
   }
   

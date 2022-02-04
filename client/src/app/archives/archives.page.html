@@ -36,7 +36,7 @@
     <ion-item *ngFor="let archive of archives" detail="false">
       <ion-thumbnail *ngIf="archive.id === currentArchivePlaying?.id" style="margin-right: 32px;" slot="start">
         <div style="padding: 10px;">
-          <svg-bars class="playing"></svg-bars>
+          <svg-bars [class.playing]="playerStatus === 'playing'"></svg-bars>
         </div>
       </ion-thumbnail>
       <ion-fab-button *ngIf="archive.id !== currentArchivePlaying?.id" (click)="playArchive(archive)" color="light" slot="start">

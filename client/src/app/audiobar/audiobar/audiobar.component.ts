@@ -1,5 +1,6 @@
 import { Component, Input, NgZone, OnInit, SimpleChanges } from '@angular/core';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ArchiveService, ShowTrack } from '../../services/archive.service';
 import { AudioService } from '../audio.service';
 import { Track } from '../track.model';
 
@@ -19,8 +20,10 @@ export class AudiobarComponent implements OnInit {
   percentElapsed: number;
   modalHeight: number;
   seekingTimeElapsed: number;
+  tracks: ShowTrack[];
   
   constructor(
+    private archiveService: ArchiveService,
     private modalController: ModalController,
     public routerOutlet: IonRouterOutlet,
     private audioService: AudioService,
@@ -32,9 +35,16 @@ export class AudiobarComponent implements OnInit {
     this.getPlayerStatus();
     this.getPercentElapsed();
     this.getCurrentTrack();
+    this.getTracks();
   }
 
   ngOnChanges(changes: SimpleChanges) {}
+
+  async getTracks() {
+    // this.tracksRequestComplete = false;
+    this.tracks = await this.archiveService.getTracks();
+    // this.tracksRequestComplete = true;
+  }
 
   pauseSeeking(ev: any): void {
     this.stopProp(ev);

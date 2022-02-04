@@ -105,6 +105,49 @@
           </div>
         </div>
       </ion-card>
+
+
+      <ion-card *ngFor="let track of tracks | slice:0:1">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Recent Track: <span class="float: right">{{ track.start | date:'h:mm a' }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <!-- <ion-col size="4">
+              <img src="https://is3-ssl.mzstatic.com/image/thumb/Music128/v4/46/89/f2/4689f288-ed9e-6bb5-af37-c98b58b6733b/4250506825393_1448.jpg/170x170bb.jpg">
+            </ion-col> -->
+            <ion-col size="12">
+              <ion-item lines="none">
+                <ion-label>
+                  <h1>{{ track.song.artist }}</h1>
+                  <h2>{{ track.song.title }}</h2>
+                  <p>{{ track.song.album }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+        <ion-item>
+          <ion-label>
+            <h3>Recently Played:</h3>
+          </ion-label>
+          <ion-button (click)="getTracks()" fill="clear">Refresh</ion-button>
+        </ion-item>
+        <ion-list style="background: transparent">
+          <ion-item *ngFor="let track of tracks | slice:1:20" style="--background: transparent;" button>
+            <ion-label>
+              <h2>{{ track.song.artist }}</h2>
+              <p>{{ track.song.title }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
     </ion-content>
     <!-- <ion-footer>
       <ion-toolbar></ion-toolbar>
