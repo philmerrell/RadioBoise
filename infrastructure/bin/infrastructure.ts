@@ -5,10 +5,10 @@ import { ClientStack } from '../lib/client-stack';
 import { ApiStack } from '../lib/api-stack';
 
 const app = new cdk.App();
-new ClientStack(app, 'ClientStack', {
+new ClientStack(app, 'RadioBoiseClientStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 });
 
-new ApiStack(app, 'ApiStack', {
+new ApiStack(app, 'RadioBoiseApiStack', {
   env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
 });
